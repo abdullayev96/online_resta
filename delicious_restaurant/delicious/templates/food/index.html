@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ##### Hero Area Start ##### -->
+<section class="hero-area">
+    <div class="hero-slides owl-carousel">
+        <!-- Single Hero Slide -->
+        {% for cook in foods %}
+        <div class="single-hero-slide bg-img" style="background-image: url(/media/{{ cook.image }});">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">{{cook.title}}</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">{{cook.description}}</p>
+                            <a href="{% url 'receipe_post' receipe_id=cook.id %}" class="btn delicious-btn" data-animation="fadeInUp"
+                               data-delay="1000ms">See Receipe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- ##### Hero Area End ##### -->
+
+<!-- ##### Best Receipe Area Start ##### -->
+<section class="best-receipe-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>The best Receipies</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Best Receipe Area -->
+            {% for taom in taomlar %}
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="/media/{{ taom.image }}" alt="">
+                    <div class="receipe-content">
+                        <a href="{% url 'receipe_post' receipe_id=taom.id %}">
+                            <h5>{{ taom.title }}</h5>
+                        </a>
+                        <div class="ratings">
+                            {% for star in stars %}
+                                    {% if star <= taom.stars %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ##### Best Receipe Area End ##### -->
+
+<!-- ##### CTA Area Start ##### -->
+<section class="cta-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/bg4.jpg' %});">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <!-- Cta Content -->
+                <div class="cta-content text-center">
+                    <h2>Gluten Free Receipies</h2>
+                    <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum
+                        ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan
+                        neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh</p>
+                    <a href="{% url 'receipes' %}" class="btn delicious-btn">Discover all the receipies</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### CTA Area End ##### -->
+
+<!-- ##### Small Receipe Area Start ##### -->
+<section class="small-receipe-area section-padding-80-0">
+    <div class="container">
+        <div class="cta-content text-center">
+                    <h1>About Meal</h1><br>
+        </div>
+        <div class="row">
+            {% for cook in cooks %}
+
+            <!-- Small Receipe Area -->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area d-flex">
+                    <!-- Receipe Thumb -->
+                    <div class="receipe-thumb">
+                        <img src="/media/{{ cook.image }}" alt="">
+                    </div>
+                    <!-- Receipe Content -->
+                    <div class="receipe-content">
+                        <span>{{cook.posted_at}}</span>
+                        <a href="{% url 'blog' blog_id=cook.id %}#blog_id_{{ cook.id }}">
+                            <h5>{{cook.title}}</h5>
+                        </a>
+                        <div class="ratings">
+                            {% for star in stars %}
+                                    {% if star <= cook.stars %}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ##### Small Receipe Area End ##### -->
+
+<!-- ##### Quote Subscribe Area Start ##### -->
+<section class="quote-subscribe-adds">
+    <div class="container">
+        <div class="row align-items-end">
+            <!-- Quote -->
+            <div class="col-12 col-lg-4">
+                <div class="quote-area text-center">
+                    <span>"</span>
+                    <h4>Nothing is better than going home to family and eating good food and relaxing</h4>
+                    <p>John Smith</p>
+                    <div class="date-comments d-flex justify-content-between">
+                        <div class="date">January 04, 2021</div>
+                        <div class="comments">2 Comments</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-12 col-lg-4">
+                <div class="newsletter-area">
+                    <h4>Subscribe to our newsletter</h4>
+                    <!-- Form -->
+                    <div class="newsletter-form bg-img bg-overlay"
+                         style="background-image: url({% static 'img/bg-img/bg1.jpg' %});">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="email" name="email" placeholder="Subscribe to newsletter">
+                            <button type="submit" class="btn delicious-btn w-100">Subscribe</button>
+                        </form>
+                        <p>Fusce nec ante vitae lacus aliquet vulputate. Donec sceleri sque accumsan molestie.
+                            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adds -->
+            <div class="col-12 col-lg-4">
+                <div class="delicious-add">
+                    <img src="{% static 'img/bg-img/add.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
